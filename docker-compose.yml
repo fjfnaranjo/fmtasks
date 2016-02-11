@@ -1,0 +1,10 @@
+web:
+  build: .
+  entrypoint:
+    - MONGODB_URI=mongodb://mongo
+    - python
+    - fmtasks.py
+  links:
+    - mongodb
+mongodb:
+  image: mongo
