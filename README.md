@@ -77,10 +77,10 @@ Compose:
     $ docker-compose up
 
 Alternatively, if you do not have Docker Compose installed, you can run the app
-providing a MongoDB connection string as a parameter:
+providing a MongoDB connection string as an environment variable:
 
     $ docker build -t fmtasks .
-    $ docker run fmtasks MONGODB_URI=mongodb://example.com python fmtasks.py
+    $ docker run --env MONGODB_URI=mongodb://example.com -p 5000:5000 fmtasks
     
 Change "mongodb://example.com" for the appropriate URI.
 

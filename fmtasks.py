@@ -9,10 +9,10 @@ basic CRUD operations. It uses Flask for the API and MongoDB for the storage.
 from argparse import ArgumentParser
 from os import environ
 
+from bson.objectid import ObjectId
 from flask import Flask, request, url_for
 from flask.json import jsonify
 from pymongo import MongoClient
-from bson.objectid import ObjectId
 
 
 # General Flask configuration
@@ -71,7 +71,7 @@ class InvalidAPIUsage(Exception):
 
 @app.errorhandler(InvalidAPIUsage)
 def handle_invalid_usage(error):
-    """Error handler for InvalidUsage."""
+    """Error handler for InvalidAPIUsage."""
 
     response = jsonify(error.to_dict())
     response.status_code = error.status_code
@@ -88,7 +88,7 @@ def get_content_or_400(a_request):
 
 
 def get_task_or_404(collection, id):
-    """Get object or 404 adapted for tasks."""
+    """'Get object or 404' adapted for tasks."""
 
     object_id = ObjectId(id)
     object = collection.find({"_id": object_id})
@@ -137,7 +137,7 @@ def add_task(id):
 @app.route('/task/', methods=['GET'], defaults={'id': None})
 @app.route('/task/<id>', methods=['GET'])
 def get_task(id):
-    """Get a task from the database."""
+    """Gets a task from the database."""
 
     if not id:
         raise InvalidAPIUsage("id is required")
@@ -154,7 +154,7 @@ def get_task(id):
 @app.route('/task/', methods=['PUT'], defaults={'id': None})
 @app.route('/task/<id>', methods=['PUT'])
 def edit_task(id):
-    """Edit an existing task contents."""
+    """Edits an existing task contents."""
 
     if not id:
         raise InvalidAPIUsage("id is required")
@@ -175,7 +175,7 @@ def edit_task(id):
 @app.route('/task/', methods=['DELETE'], defaults={'id': None})
 @app.route('/task/<id>', methods=['DELETE'])
 def remove_task(id):
-    """Edit an existing task contents."""
+    """Deletes an existing task."""
 
     if not id:
         raise InvalidAPIUsage("id is required")
